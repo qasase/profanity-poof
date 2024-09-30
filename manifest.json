@@ -13,5 +13,9 @@
       ]
     }
   ],
-  "permissions": ["scripting", "activeTab"]
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "list.html",
+    "default_icon": "qasa_logo.png"
+  }
 }
