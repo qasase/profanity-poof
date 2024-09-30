@@ -6,7 +6,10 @@
   "content_scripts": [
     {
       "js": ["src/main.js"],
-      "matches": ["https://staging.qasa.se/*"]
+      "matches": [
+        "https://staging.qasa.se/*",
+        "https://qasasupport1633608442.zendesk.com/*"
+      ]
     }
   ],
   "permissions": ["scripting", "activeTab"]
