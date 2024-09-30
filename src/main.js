@@ -7,6 +7,7 @@ const callback = (mutationList, observer) => {
       replaceInnerTextInTag("p");
       console.log("A child node has been added or removed.");
     } else if (mutation.type === "attributes") {
+      return;
       console.log(`The ${mutation.attributeName} attribute was modified.`);
     }
   }
@@ -17,10 +18,11 @@ observer.observe(document.body, config);
 
 function replaceInnerTextInTag(tagName) {
   const tags = document.querySelectorAll(tagName);
+  const badWordRegex = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "gi");
+
   tags.forEach((tag) => {
-    if (!BAD_WORDS.some((word) => tag.innerText.includes(word))) return;
-    BAD_WORDS.forEach(
-      (word) => (tag.innerText = tag.innerText.replaceAll(word, "!@)%)@")),
-    );
+    if (badWordRegex.test(tag.innerText)) {
+      tag.innerText = tag.innerText.replace(badWordRegex, "!@)%)@");
+    }
   });
 }
