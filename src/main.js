@@ -19,7 +19,6 @@ function replaceInnerTextInTag(tagName) {
   const tags = document.querySelectorAll(tagName);
   tags.forEach((tag) => {
     if (!BAD_WORDS.some((word) => tag.innerText.includes(word))) return;
-    const wordsInInnerText = tag.innerText.split(" ");
     BAD_WORDS.forEach(
       (word) => (tag.innerText = tag.innerText.replaceAll(word, "!@)%)@")),
     );
