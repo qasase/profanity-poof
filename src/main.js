@@ -1,3 +1,5 @@
+console.log("Profanity poof is running!");
+
 const BAD_WORDS = ["ful", "dum"];
 const CONFIG = { subtree: true, childList: true };
 const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "i");
@@ -44,24 +46,43 @@ const replaceBadWords = () => {
         continue;
       }
       if (BAD_WORD_REGEX.test(node.nodeValue)) {
+        treeWalker.currentNode.setAttribute("data-censor", "true");
         const words = node.nodeValue.split(/(\s+)/);
         node.nodeValue = "";
 
         words.map((word) => {
           if (BAD_WORD_REGEX.test(word)) {
-            const button = document.createElement("button");
-            button.innerText = getRandomGrawlix();
-            button.onclick = () => console.log(word);
-            treeWalker.currentNode.appendChild(button);
+            treeWalker.currentNode.appendChild(createCensorButton(word));
           } else {
             treeWalker.currentNode.appendChild(document.createTextNode(word));
           }
-
-          treeWalker.currentNode.setAttribute("data-censor", "true");
         });
       }
     }
   }
+};
+
+const createCensorButton = (word) => {
+  const button = document.createElement("button");
+  const censoredClass = "poof-censor-button--censored";
+  const revealedClass = "poof-censor-button--revealed";
+
+  button.classList.add("poof-censor-button");
+  button.classList.add(censoredClass);
+
+  button.setAttribute("data-curse", word);
+  button.setAttribute("data-grawlix", getRandomGrawlix());
+
+  button.onclick = () => {
+    if (button.classList.contains(censoredClass)) {
+      button.classList.add(revealedClass);
+      button.classList.remove(censoredClass);
+    } else {
+      button.classList.add(censoredClass);
+      button.classList.remove(revealedClass);
+    }
+  };
+  return button;
 };
 
 const observer = new MutationObserver(onDomMutated);

@@ -6,6 +6,7 @@
   "content_scripts": [
     {
       "js": ["src/main.js"],
+      "css": ["src/main.css"],
       "matches": [
         "https://staging.qasa.se/*",
         "https://qasasupport1633608442.zendesk.com/*"

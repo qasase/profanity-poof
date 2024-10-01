@@ -1,0 +1,12 @@
+.poof-censor-button {
+	background-color:transparent;
+	padding-inline:0;
+	padding-bottom:4px;
+}
+.poof-censor-button--censored[data-grawlix]::before {
+	content:attr(data-grawlix);
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.poof-censor-button--revealed[data-curse]::before{
+	content:attr(data-curse);
+}
