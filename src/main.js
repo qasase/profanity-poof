@@ -1,6 +1,18 @@
 const BAD_WORDS = ["ful", "dum"];
 const CONFIG = { subtree: true, childList: true };
 const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "gi");
+const GRAWLIX = [
+  "$&*@!%",
+  "&@$",
+  "@*$!&",
+  "%$*!@&",
+  "$@&%*!",
+  "!&@$*%$%@",
+  "@&$%!*%*@",
+];
+
+const getRandomGrawlix = () =>
+  GRAWLIX[Math.floor(Math.random() * GRAWLIX.length)];
 
 const onDomMutated = (mutationList) => {
   for (const mutation of mutationList) {
@@ -29,7 +41,10 @@ const replaceBadWords = () => {
         continue;
       }
       if (BAD_WORD_REGEX.test(node.nodeValue)) {
-        node.nodeValue = node.nodeValue.replace(BAD_WORD_REGEX, "****");
+        node.nodeValue = node.nodeValue.replace(
+          BAD_WORD_REGEX,
+          getRandomGrawlix(),
+        );
       }
     }
   }
