@@ -1,6 +1,6 @@
 const BAD_WORDS = ["ful", "dum"];
 const CONFIG = { subtree: true, childList: true };
-const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "gi");
+const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "i");
 const GRAWLIX = [
   "$&*@!%",
   "&@$",
@@ -40,11 +40,25 @@ const replaceBadWords = () => {
       if (node.nodeType !== Node.TEXT_NODE) {
         continue;
       }
+      if (treeWalker.currentNode.hasAttribute("data-censor")) {
+        continue;
+      }
       if (BAD_WORD_REGEX.test(node.nodeValue)) {
-        node.nodeValue = node.nodeValue.replace(
-          BAD_WORD_REGEX,
-          getRandomGrawlix(),
-        );
+        const words = node.nodeValue.split(/(\s+)/);
+        node.nodeValue = "";
+
+        words.map((word) => {
+          if (BAD_WORD_REGEX.test(word)) {
+            const button = document.createElement("button");
+            button.innerText = getRandomGrawlix();
+            button.onclick = () => console.log(word);
+            treeWalker.currentNode.appendChild(button);
+          } else {
+            treeWalker.currentNode.appendChild(document.createTextNode(word));
+          }
+
+          treeWalker.currentNode.setAttribute("data-censor", "true");
+        });
       }
     }
   }
