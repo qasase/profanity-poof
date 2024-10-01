@@ -1,31 +1,39 @@
 const BAD_WORDS = ["ful", "dum"];
-const TAGS = ["p", "span", "label"];
-const CONFIG = { attributes: true, subtree: true, childList: true };
+const CONFIG = { subtree: true, childList: true };
+const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "gi");
 
-console.log("Profanity Poof is running...");
-
-const callback = (mutationList, observer) => {
+const onDomMutated = (mutationList) => {
   for (const mutation of mutationList) {
     if (mutation.type === "childList") {
-      replaceInnerTextInTags();
+      replaceBadWords();
     }
   }
 };
 
-const observer = new MutationObserver(callback);
-observer.observe(document.body, CONFIG);
+const treeFilter = (node) => {
+  if (node.nodeName === "STYLE" || node.nodeName === "SCRIPT") {
+    return NodeFilter.FILTER_SKIP;
+  }
+  return NodeFilter.FILTER_ACCEPT;
+};
 
-function replaceInnerTextInTags() {
-  const tags = document.querySelectorAll(TAGS);
-  const badWordRegex = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "gi");
-
-  tags.forEach((tag) => {
-    if (
-      badWordRegex.test(tag.innerText) &&
-      !tag.hasAttribute("data-censored")
-    ) {
-      tag.setAttribute("data-censored", "");
-      tag.innerText = tag.innerText.replace(badWordRegex, "!@)%)@");
+const replaceBadWords = () => {
+  const treeWalker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_ELEMENT,
+    treeFilter,
+  );
+  while (treeWalker.nextNode()) {
+    for (const node of treeWalker.currentNode.childNodes) {
+      if (node.nodeType !== Node.TEXT_NODE) {
+        continue;
+      }
+      if (BAD_WORD_REGEX.test(node.nodeValue)) {
+        node.nodeValue = node.nodeValue.replace(BAD_WORD_REGEX, "****");
+      }
     }
-  });
-}
+  }
+};
+
+const observer = new MutationObserver(onDomMutated);
+observer.observe(document.body, CONFIG);
