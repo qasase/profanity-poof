@@ -7,25 +7,35 @@ var words = [
 ];
 
 function addWord(event) {
-	words.push(document.getElementById('wordInput').value);
-	document.getElementById('wordInput').value = '';
+	var wordInput = document.getElementById('wordInput').value
+
+	console.log(wordInput);
+	if (wordInput === '') {
+	//	alert('Please enter a real word!');
+		return;
+	}
+
+	words.push(wordInput);
+	wordInput = '';
 	document.getElementById('wordList').innerHTML = words.map((word) => {
         return `<li>${word}</li>`;
-}).join('');
+	}).join('');
 }
 
+function addListWord(event) {
+	if (wordIput === '') { return; }
+	//word not already in list
+	const listWord = document.createElement('li');
+	listWord.textContent = wordInput;
+	words.push(wordIput);
+}
 
+function removeWord(event) {
+	return;
+}
+
+var wordInput = document.getElementById('wordInput').value 
+
+//document.getElementById('addWord').addEventListner('click', addListWord);
 document.getElementById('addWord').addEventListener('click', addWord);
-
-
-var parsed = "";
-for (i = 0; i<words.length; i++) {
-	var myobj=  words[i];
-	for (var property in myobj) {
-		parsed += property + ": " + myobj[property] + "\n";          
-	}
-}                           
-
-document.getElementById('wordListWord').innerHTML = words.map((word) => {
-	return `<li>${word}</li>`;
-}).join('');  
+//document.getElementById('removeWord').addEventListener('click', removeWord); 
