@@ -8,11 +8,20 @@ wordInputField.addEventListener("input", (e) => {
   createListItems(e.target.value);
 });
 
-function addWord(wordInput) {
-  if (wordInput === "") {
+function addWord() {
+  const word = wordInputField.value.trim();
+
+  if (word === "" || words.some((w) => w.title && w.title === word.toLowerCase())) {
     return;
   }
-  words.push(wordInput);
+  chrome.runtime.sendMessage({ action: "saveCurseWord", curse: word }).then(() => {
+    chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
+      words = items;
+      words.map((word) => {
+        wordList.appendChild(createListItem(word.title.toLowerCase()));
+      });
+    });
+  });
 }
 
 function createListItem(word) {
@@ -36,7 +45,7 @@ function createListItems(input) {
     if (!word.title) {
       return false;
     }
-    return word.title.toLowerCase().startsWith(input.toLowerCase());
+    return word.title.startsWith(input.toLowerCase());
   });
 
   filteredWords.map((word) => {
@@ -46,10 +55,10 @@ function createListItems(input) {
 
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
+  addWord();
 });
 
 window.onload = () => {
-  console.log("hej");
   chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
     words = items;
   });
