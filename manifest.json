@@ -5,8 +5,12 @@
   "version": "1.0",
   "content_scripts": [
     {
-      "js": ["src/main.js"],
-      "css": ["src/main.css"],
+      "js": [
+        "src/main.js"
+      ],
+      "css": [
+        "src/main.css"
+      ],
       "matches": [
         "https://staging.qasa.se/*",
         "https://qasasupport1633608442.zendesk.com/*"
@@ -16,9 +20,12 @@
   "background": {
     "service_worker": "src/workers/api.js"
   },
-  "permissions": ["scripting", "activeTab"],
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
   "action": {
     "default_popup": "list.html",
-    "default_icon": "qasa_logo.png"
+    "default_icon": "logo.png"
   }
 }

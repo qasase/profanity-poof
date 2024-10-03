@@ -1,22 +1,91 @@
+.header img {
+  padding: none;
+  float: left;
+  width: 50px;
+  height: 50px;
+  top: 18px;
+  left: 0px;
+}
+
+.header {
+  color: #52524D;
+  width: 333px;
+  height: 40px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+body {
+  /* border-radius: 25px; */
+  background-color: #FFFFFF;
+  width: 333px;
+}
+
+input {
+  border-radius: 12px;
+  margin: 10px;
+  padding: 10px;
+  width: 191px;
+  height: 48px;
+  border: 1px solid #E5E5DF;
+  color: #A3A396;
+}
+
+::placeholder {
+  color: #A3A396;
+}
+
+.wordList {
+  background-color: #F9F9F6;
+  border-radius: 25px;
+  padding: 20px;
+  margin: 20px;
+}
+
 h1 {
-  font-size: 24px;
-  font-weight: bold;
-  color: brown;
-  margin: 0;
+  position: relative;
+  top: 18px;
+  left: 5px;
+  size: 50px;
+
+}
+
+span {
+  align-items: left;
+}
+
+ul {
+  background-color: none;
+  list-style-type: none;
   padding: 0;
+  margins: 0;
+}
+
+.wordListDiv {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 25px;
+  background-color: #c2c221;
 }
 
 li {
-  background-color: #4CAF50;
+  background-color: none;
 
   align-items: right;
 }
 
 .deleteButton {
-  background-color: #914caf;
+  color: #78786C;
+  float: right;
+  background: none;
+  border: none;
 }
 
-button {
-  background-color: #acc484;
-
+#addWord {
+  background-color: #F0F0EB;
+  border: none;
+  border-radius: 999px;
+  height: 48px;
+  width: 78px;
+  color: #342620;
 }
