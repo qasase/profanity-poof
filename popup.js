@@ -1,8 +1,4 @@
-const words = [
-  { title: "Fan", selflink: "fakelink" },
-  { title: "Satan", selflink: "fakelink" },
-  { title: "Horis", selflink: "fakelink" },
-];
+let words = [];
 
 const wordInputField = document.getElementById("wordInput");
 const wordList = document.getElementById("wordList");
@@ -33,9 +29,15 @@ function createListItem(word) {
 }
 
 function createListItems(input) {
-  const filteredWords = words.filter((word) =>
-    word.title.toLowerCase().startsWith(input.toLowerCase()),
-  );
+  if (!words.length) {
+    return null;
+  }
+  const filteredWords = words.filter((word) => {
+    if (!word.title) {
+      return false;
+    }
+    return word.title.toLowerCase().startsWith(input.toLowerCase());
+  });
 
   filteredWords.map((word) => {
     wordList.appendChild(createListItem(word.title));
@@ -45,3 +47,10 @@ function createListItems(input) {
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
 });
+
+window.onload = () => {
+  console.log("hej");
+  chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
+    words = items;
+  });
+};
