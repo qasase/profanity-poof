@@ -16,27 +16,20 @@ wordInputField.addEventListener("input", (e) => {
 function addWord() {
   chrome.runtime
     .sendMessage({ action: "saveCurseWord", curse: inputWord })
-    .then(() => {
-      chrome.runtime
-        .sendMessage({ action: "getCurseWords" })
-        .then(({ items }) => {
-          words = items;
-          createListItems();
-        });
-    });
+    .then(getAndCreateListItems);
 }
 
 function deleteWord(self_link) {
   chrome.runtime
     .sendMessage({ action: "deleteCurseWord", uri: self_link })
-    .then(() => {
-      chrome.runtime
-        .sendMessage({ action: "getCurseWords" })
-        .then(({ items }) => {
-          words = items;
-          createListItems();
-        });
-    });
+    .then(getAndCreateListItems);
+}
+
+function getAndCreateListItems() {
+  chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
+    words = items;
+    createListItems();
+  });
 }
 
 function createListItem(word) {
