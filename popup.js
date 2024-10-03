@@ -7,16 +7,15 @@ const wordList = document.getElementById("wordList");
 wordInputField.addEventListener("input", (e) => {
   inputWord = e.target.value.toLowerCase().trim();
   if (!inputWord) {
+    wordList.innerText = "";
     return;
   }
   createListItems();
 });
 
 function addWord() {
-  const word = wordInputField.value.trim();
-
   chrome.runtime
-    .sendMessage({ action: "saveCurseWord", curse: word })
+    .sendMessage({ action: "saveCurseWord", curse: inputWord })
     .then(() => {
       chrome.runtime
         .sendMessage({ action: "getCurseWords" })
@@ -63,11 +62,9 @@ function createListItems() {
     if (!word.title) {
       return false;
     }
-    console.log("inputWord", inputWord);
-    console.log(word.title, inputWord);
     return word.title.startsWith(inputWord);
   });
-  console.log(filteredWords);
+
   filteredWords.map((word) => {
     wordList.appendChild(createListItem(word));
   });
