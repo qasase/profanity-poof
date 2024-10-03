@@ -87,22 +87,3 @@ const createCensorButton = (word) => {
 
 const observer = new MutationObserver(onDomMutated);
 observer.observe(document.body, CONFIG);
-
-async function saveCurse(curse) {
-  const response = await chrome.runtime.sendMessage({
-    action: "saveCurse",
-    curse,
-  });
-}
-
-async function test() {
-  const response = await chrome.runtime.sendMessage({
-    action: "test",
-  });
-}
-
-function getCurseWords() {
-  chrome.runtime.sendMessage({
-    action: "getCurseWords",
-  });
-}
