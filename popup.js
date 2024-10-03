@@ -1,40 +1,43 @@
 let words = [];
+let inputWord = "";
 
 const wordInputField = document.getElementById("wordInput");
 const wordList = document.getElementById("wordList");
 
 wordInputField.addEventListener("input", (e) => {
-  wordList.innerText = "";
-  createListItems(e.target.value);
+  inputWord = e.target.value.toLowerCase().trim();
+  if (!inputWord) {
+    return;
+  }
+  createListItems();
 });
 
 function addWord() {
   const word = wordInputField.value.trim();
 
-  if (word === "" || words.some((w) => w.title && w.title === word.toLowerCase())) {
-    return;
-  }
-  chrome.runtime.sendMessage({ action: "saveCurseWord", curse: word }).then(() => {
-    chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
-      words = items;
-      words.map((word) => {
-        word.title = word.title.toLowerCase();
-        wordList.appendChild(createListItem(word));
-      });
+  chrome.runtime
+    .sendMessage({ action: "saveCurseWord", curse: word })
+    .then(() => {
+      chrome.runtime
+        .sendMessage({ action: "getCurseWords" })
+        .then(({ items }) => {
+          words = items;
+          createListItems();
+        });
     });
-  });
 }
 
 function deleteWord(self_link) {
-  chrome.runtime.sendMessage({ action: "deleteCurseWord", uri: self_link }).then(() => {
-    chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
-      words = items;
-      words.map((word) => {
-        word.title = word.title.toLowerCase();
-        wordList.appendChild(createListItem(word));
-      });
+  chrome.runtime
+    .sendMessage({ action: "deleteCurseWord", uri: self_link })
+    .then(() => {
+      chrome.runtime
+        .sendMessage({ action: "getCurseWords" })
+        .then(({ items }) => {
+          words = items;
+          createListItems();
+        });
     });
-  });
 }
 
 function createListItem(word) {
@@ -51,17 +54,20 @@ function createListItem(word) {
   return listItem;
 }
 
-function createListItems(input) {
+function createListItems() {
   if (!words.length) {
     return null;
   }
+  wordList.innerText = "";
   const filteredWords = words.filter((word) => {
     if (!word.title) {
       return false;
     }
-    return word.title.startsWith(input.toLowerCase());
+    console.log("inputWord", inputWord);
+    console.log(word.title, inputWord);
+    return word.title.startsWith(inputWord);
   });
-
+  console.log(filteredWords);
   filteredWords.map((word) => {
     wordList.appendChild(createListItem(word));
   });
