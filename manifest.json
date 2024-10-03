@@ -13,6 +13,9 @@
       ]
     }
   ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
   "permissions": ["scripting", "activeTab"],
   "action": {
     "default_popup": "list.html",

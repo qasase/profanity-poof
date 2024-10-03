@@ -1,55 +1,51 @@
 // var words = require("./words");
 // import {words} from './words.js';
 
-var words = [
-	"luder",
-	"röv",
-	"satan"
-];
+var words = ["luder", "röv", "satan"];
+
+window.onload = () => {
+  chrome.runtime
+    .sendMessage({
+      action: "getCurseWords",
+    })
+    .then((r) => console.log(r));
+};
 
 function addWord(wordInput) {
+  if (wordInput === "") {
+    return;
+  }
 
-	if (wordInput === '') {
-		return;
-	}
-
-	words.push(wordInput);
+  words.push(wordInput);
 }
 
 function removeWord(event) {
-	return;
+  return;
 }
 
 function listWords() {
-	words.map(function (word) {
-		const listItem = document.createElement('li');
-		const listWordText = document.createElement('span');
-		listWordText.textContent = word;
-		listItem.appendChild(listWordText);
+  words.map(function (word) {
+    const listItem = document.createElement("li");
+    const listWordText = document.createElement("span");
+    listWordText.textContent = word;
+    listItem.appendChild(listWordText);
 
-		const deleteButton = document.createElement('button');
-		deleteButton.textContent = 'x';
-		listItem.appendChild(deleteButton);
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "x";
+    listItem.appendChild(deleteButton);
 
-		document.getElementById('wordList').appendChild(listItem);
-
-	})
+    document.getElementById("wordList").appendChild(listItem);
+  });
 }
 
-var wordInputField = document.getElementById('wordInput')
+var wordInputField = document.getElementById("wordInput");
 
-document.getElementById('addWord').addEventListener('click', function () {
-	addWord(wordInput.value.trim());
-	wordInput.value = '';
-	listWords();
+document.getElementById("addWord").addEventListener("click", function () {
+  addWord(wordInput.value.trim());
+  wordInput.value = "";
+  listWords();
 });
 //document.getElementById('removeWord').addEventListener('click', removeWord);
-
-
-
-
-
-
 
 // function addWord(word) {
 // 	if (word === '') {
@@ -68,8 +64,6 @@ document.getElementById('addWord').addEventListener('click', function () {
 // 	listItem.appendChild(deleteButton);
 
 // 	wordList.appendChild(listItem);
-
-
 
 // 	deleteButton.addEventListener('click', function () {
 // 		wordList.removeChild(listItem);
