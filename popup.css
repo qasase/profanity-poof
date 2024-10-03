@@ -1,91 +1,123 @@
-.header img {
-  padding: none;
-  float: left;
-  width: 50px;
-  height: 50px;
-  top: 18px;
-  left: 0px;
+@font-face {
+  font-family: 'qasa-diatype-rounded';
+  src: url('/assets/QasaDiatypeRounded-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-.header {
-  color: #52524D;
-  width: 333px;
-  height: 40px;
-  padding-left: 24px;
-  padding-right: 24px;
+* {
+  font-family: 'qasa-diatype-rounded', helvetica, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f6;
 }
 
 body {
-  /* border-radius: 25px; */
-  background-color: #FFFFFF;
   width: 333px;
-}
-
-input {
-  border-radius: 12px;
-  margin: 10px;
-  padding: 10px;
-  width: 191px;
-  height: 48px;
-  border: 1px solid #E5E5DF;
-  color: #A3A396;
-}
-
-::placeholder {
-  color: #A3A396;
-}
-
-.wordList {
-  background-color: #F9F9F6;
-  border-radius: 25px;
-  padding: 20px;
-  margin: 20px;
-}
-
-h1 {
-  position: relative;
-  top: 18px;
-  left: 5px;
-  size: 50px;
-
-}
-
-span {
-  align-items: left;
 }
 
 ul {
   background-color: none;
   list-style-type: none;
   padding: 0;
-  margins: 0;
+  margin: 0;
 }
 
-.wordListDiv {
-  padding: 10px;
-  margin: 10px;
-  border-radius: 25px;
-  background-color: #c2c221;
+h1 {
+  color: #52524d;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 21.57px;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+span {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 31.6px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000000;
 }
 
 li {
-  background-color: none;
-
-  align-items: right;
+  display: flex;
+  justify-content: space-between;
+  padding-block: 4px;
 }
 
-.deleteButton {
-  color: #78786C;
-  float: right;
-  background: none;
-  border: none;
+input {
+  flex: 1;
+  border-radius: 12px;
+  padding: 12px;
+  height: 48px;
+  border: 1px solid #e5e5df;
+  color: #a3a396;
+}
+::placeholder {
+  color: #a3a396;
 }
 
-#addWord {
-  background-color: #F0F0EB;
+#top-container {
+  background-color: #ffffff;
+  padding-top: 16px;
+  padding-inline: 24px;
+  border-radius: 0 0 32px 32px;
+  padding-bottom: 20px;
+}
+
+#word-list-div {
+  background-color: #f9f9f6;
+  padding-inline: 24px;
+  padding-bottom: 20px;
+}
+
+#add-word {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  background-color: #f0f0eb;
   border: none;
   border-radius: 999px;
   height: 48px;
   width: 78px;
   color: #342620;
 }
+
+.header {
+  color: #52524d;
+  display: flex;
+  align-items: center;
+}
+
+.header img {
+  height: 40px;
+}
+
+.word-list {
+  background-color: #f9f9f6;
+  border-radius: 25px;
+}
+
+.delete-button {
+  color: #78786c;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+form {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 16px;
+}
+

@@ -1,10 +1,11 @@
 let words = [];
 let inputWord = "";
 
-const wordInputField = document.getElementById("wordInput");
-const wordList = document.getElementById("wordList");
+const wordInputField = document.getElementById("word-input");
+const wordList = document.getElementById("word-list");
 
 wordInputField.addEventListener("input", (e) => {
+  wordList.style.height = "0px";
   inputWord = e.target.value.toLowerCase().trim();
   if (!inputWord) {
     wordList.innerText = "";
@@ -41,8 +42,8 @@ function createListItem(word) {
 
   const deleteButton = document.createElement("button");
   deleteButton.onclick = () => deleteWord(word._self_link);
-  deleteButton.textContent = "x";
-  deleteButton.className = "deleteButton";
+  deleteButton.className = "delete-button";
+  deleteButton.appendChild(createXIcon());
   listItem.appendChild(deleteButton);
   return listItem;
 }
@@ -74,3 +75,29 @@ window.onload = () => {
     words = items;
   });
 };
+
+function createXIcon(size = 24, color = "currentColor", strokeWidth = 2) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", size);
+  svg.setAttribute("height", size);
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("stroke", color);
+  svg.setAttribute("stroke-width", strokeWidth);
+  svg.setAttribute("stroke-linecap", "round");
+  svg.setAttribute("stroke-linejoin", "round");
+
+  // Create the first path (top-left to bottom-right)
+  const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path1.setAttribute("d", "M18 6 6 18");
+
+  // Create the second path (top-right to bottom-left)
+  const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path2.setAttribute("d", "m6 6 12 12");
+
+  // Append paths to the SVG
+  svg.appendChild(path1);
+  svg.appendChild(path2);
+
+  return svg;
+}

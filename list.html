@@ -1,28 +1,27 @@
 <html>
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profanity Poofer</title>
-</head>
-
-<body>
-  <div class="header">
-    <img src="logo.png" alt="logo" />
-    <h1>Profanity Poof</h1>
-  </div>
-  <!-- <h1><img src="logo.png" alt="logo" /> Poof</h1> -->
-  <div>
-    <form id="wordsForm">
-      <input type="text" id="wordInput" placeholder="Bad word..." />
-      <button id="addWord">Add</button>
-    </form>
-    <div id="wordListDiv">
-      <ul id="wordList"></ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profanity Poofer</title>
+  </head>
+  <body>
+    <div id="top-container">
+      <div class="header">
+        <img src="logo.png" alt="logo" />
+        <h1>Profanity Poof</h1>
+      </div>
+      <div>
+        <form id="words-form">
+          <input type="text" id="word-input" placeholder="Bad word..." />
+          <button id="add-word">Add</button>
+        </form>
+      </div>
     </div>
-    <link rel="stylesheet" href="popup.css" />
+    <div id="word-list-div">
+      <ul id="word-list"></ul>
+    </div>
+    <link rel="stylesheet" href="./popup.css" type="text/css" />
     <script src="popup.js"></script>
-  </div>
-</body>
-
+  </body>
 </html>
+
