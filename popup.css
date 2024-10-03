@@ -1,0 +1,22 @@
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: brown;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  background-color: #4CAF50;
+
+  align-items: right;
+}
+
+.deleteButton {
+  background-color: #914caf;
+}
+
+button {
+  background-color: #acc484;
+
+}

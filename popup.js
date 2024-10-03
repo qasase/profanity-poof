@@ -47,6 +47,7 @@ function createListItem(word) {
   const deleteButton = document.createElement("button");
   deleteButton.onclick = () => deleteWord(word._self_link);
   deleteButton.textContent = "x";
+  deleteButton.className = "deleteButton";
   listItem.appendChild(deleteButton);
   return listItem;
 }
