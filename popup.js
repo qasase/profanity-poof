@@ -5,7 +5,6 @@ const wordInputField = document.getElementById("word-input");
 const wordList = document.getElementById("word-list");
 
 wordInputField.addEventListener("input", (e) => {
-  wordList.style.height = "0px";
   inputWord = e.target.value.toLowerCase().trim();
   if (!inputWord) {
     wordList.innerText = "";
