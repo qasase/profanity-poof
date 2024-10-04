@@ -20,7 +20,6 @@ const onDomMutated = (mutationList) => {
     }
   }
 };
-
 const treeFilter = (node) => {
   if (node.nodeName === "STYLE" || node.nodeName === "SCRIPT") {
     return NodeFilter.FILTER_SKIP;
@@ -43,10 +42,9 @@ const replaceBadWords = () => {
       if (node.nodeType !== Node.TEXT_NODE) {
         continue;
       }
-      //FIXME
-      // if (treeWalker.currentNode.hasAttribute("data-censor")) {
-      //   continue;
-      // }
+      if (treeWalker.currentNode.hasAttribute("data-censor")) {
+        continue;
+      }
       if (BAD_WORD_REGEX.test(node.nodeValue)) {
         treeWalker.currentNode.setAttribute("data-censor", "true");
         const words = node.nodeValue.split(/(\s+)/);
@@ -96,4 +94,8 @@ chrome.runtime.onMessage.addListener(function (request) {
   }
   badWords = request.words.filter(Boolean);
   replaceBadWords();
+});
+
+chrome.runtime.sendMessage({ action: "getCurseWords" }).then(({ items }) => {
+  badWords = items.filter(Boolean);
 });
