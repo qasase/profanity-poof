@@ -63,6 +63,7 @@ function createListItems() {
   filteredWords.map((word) => {
     wordList.appendChild(createListItem(word));
   });
+  document.documentElement.style.height = "0px";
 }
 
 document.querySelector("form").addEventListener("submit", (e) => {
