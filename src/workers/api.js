@@ -65,7 +65,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       deleteCurseWord(request.uri).then(sendResponse);
       break;
     case "getCurseWords":
-      getCurseWords().then(sendResponse);
+      getCurseWords().then((response) => {
+        sendResponse(response);
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          let activeTab = tabs[0];
+          chrome.tabs.sendMessage(activeTab.id, {
+            words: response.items.map((item) => item.title),
+          });
+        });
+      });
       break;
     case "saveCurseWord":
       saveCurseWord(request.curse).then(sendResponse);

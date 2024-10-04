@@ -1,8 +1,5 @@
-console.log("Profanity poof is running!");
-
-const BAD_WORDS = ["ful", "dum"];
+let badWords = [];
 const CONFIG = { subtree: true, childList: true };
-const BAD_WORD_REGEX = new RegExp(`\\b(${BAD_WORDS.join("|")})\\b`, "i");
 const GRAWLIX = [
   "$&*@!%",
   "&@$",
@@ -32,6 +29,10 @@ const treeFilter = (node) => {
 };
 
 const replaceBadWords = () => {
+  if (!badWords || !badWords.length) {
+    return;
+  }
+  const BAD_WORD_REGEX = new RegExp(`\\b(${badWords.join("|")})\\b`, "i");
   const treeWalker = document.createTreeWalker(
     document.body,
     NodeFilter.SHOW_ELEMENT,
@@ -42,9 +43,10 @@ const replaceBadWords = () => {
       if (node.nodeType !== Node.TEXT_NODE) {
         continue;
       }
-      if (treeWalker.currentNode.hasAttribute("data-censor")) {
-        continue;
-      }
+      //FIXME
+      // if (treeWalker.currentNode.hasAttribute("data-censor")) {
+      //   continue;
+      // }
       if (BAD_WORD_REGEX.test(node.nodeValue)) {
         treeWalker.currentNode.setAttribute("data-censor", "true");
         const words = node.nodeValue.split(/(\s+)/);
@@ -87,3 +89,11 @@ const createCensorButton = (word) => {
 
 const observer = new MutationObserver(onDomMutated);
 observer.observe(document.body, CONFIG);
+
+chrome.runtime.onMessage.addListener(function (request) {
+  if (!request.words) {
+    return;
+  }
+  badWords = request.words.filter(Boolean);
+  replaceBadWords();
+});
